@@ -3,12 +3,26 @@ const { animals } = require('./data/animals.json');
 const PORT = process.env.PORT || 3001;
 const app = express();
 
+function findById(id, animalsArray) {
+  const result = animalsArray.filter((animal) => animal.id === id)[0];
+  return result;
+}
+
 app.get('/api/animals', (req, res) => {
   let results = animals;
   if (req.query) {
     results = filterByQuery(req.query, results);
   }
   res.json(results);
+});
+
+app.get('/api/animals/:id', (req, res) => {
+  const result = findById(req.params.id, animals);
+  if (result) {
+    res.json(result);
+  } else {
+    res.sendStatus(404);
+  }
 });
 
 app.listen(PORT, () => {
