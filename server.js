@@ -12,6 +12,8 @@ app.use(express.urlencoded({ extended: true }));
 // Parse incoming JSON data
 app.use(express.json());
 
+app.use(express.static('public'));
+
 function findById(id, animalsArray) {
   const result = animalsArray.filter((animal) => animal.id === id)[0];
   return result;
